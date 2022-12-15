@@ -20,6 +20,23 @@ class Blog:
             self.users.add(new_user)
             print(f"{new_user} has been created.")
 
+    # method to log user in
+    def log_user_in(self):
+        # Get user credentials
+        username = input("What is your username? ")
+        password = input("What is your password? ")
+        # Loop through each user in blog
+        for user in self.users:
+            # Check if a user has the same username and then check the password
+            if user.username == username and user.check_password(password):
+                # If user has good creds, set the blog's current user to that user instance
+                self.current_user = user
+                print(f"{user} has been logged in.")
+                break
+        #if no users in blog user set have that name/password, alert invalid creds
+        else:
+            print("Username and/or passowrd is incorrect.")
+
 class User:
     id_counter = 1 # Class attribute keeping track of User IDs
 
@@ -62,7 +79,7 @@ def run_blog():
             # Ask which option they want to do
             to_do = input("Which option would you like to do? ")
             # Keep asking if user chooses invalid option
-            if to_do not in {'1','5'}:
+            if to_do not in {'1', '2', '5'}:
                 to_do = input("Invalid option. Please choose 1, 2, 3, 4, or 5: ")
             if to_do == '5':
                 print("Thanks for stopping by!")
@@ -70,6 +87,16 @@ def run_blog():
             elif to_do == '1':
                 # method to create new user
                 my_blog.create_new_user()
+            elif to_do == '2':
+                # method to log user in
+                my_blog.log_user_in()
+        # if the current user is not "none" (aka a user is not logged in)
+        else:
+            # Print options for logged in user
+            print("Quit")
+            to_do = input("Which option would you like to choose? ")
+            if to_do.lower() == 'quit':
+                break
 
 
 
