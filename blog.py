@@ -37,6 +37,31 @@ class Blog:
         else:
             print("Username and/or passowrd is incorrect.")
 
+    
+    #m Method to log user out
+    def log_user_out(self):
+        # Change current_user attribute on this instance to none
+        self.current_user = None
+        print("You have successfully logged out.")
+
+    # Method to create a new post if a user is logged in
+    def create_post(self):
+        # Check to make sure user is logged in before creating
+        if self.current_user is not None:
+            # Get the title and body from user input
+            title = input("Enter the title of your post: ")
+            body = input("Enter the body of your post: ")
+            # Create a new post
+            new_post = Post(title, body, self.current_user)
+            # Add new post instance to our blog's list of posts
+            self.posts.append(new_post)
+            print(f"{new_post.title} has been created!")
+        else:
+            print("You must be logged in to perform this action.")
+
+
+
+
 class User:
     id_counter = 1 # Class attribute keeping track of User IDs
 
@@ -58,10 +83,30 @@ class User:
     
 
 class Post:
-    pass
+    id_counter = 1
 
+    def __init__(self, title, body, author):
+        """
+        title: str
+        body: str
+        author: User
+        """
+        self.title = title
+        self.body = body
+        self.author = author
+        self.id = Post.id_counter
+        Post.id_counter += 1
 
+    def __str__(self):
+        formatted_post = f"""
+        {self.id} - {self.title.title()}
+        By: {self.author}
+        {self.body}
+        """
+        return formatted_post
 
+    def __rpr__(self):
+        return f"<Post|{self.id}|{self.title}>"
 
 
 
@@ -93,11 +138,16 @@ def run_blog():
         # if the current user is not "none" (aka a user is not logged in)
         else:
             # Print options for logged in user
-            print("Quit")
+            print("1. Log Out\n2. Create New Post")
             to_do = input("Which option would you like to choose? ")
-            if to_do.lower() == 'quit':
-                break
+            while to_do not in {'1', '2'}:
+                to_do = input("Invalid option. Please choose 1 or 2. ")
+            if to_do == '1':
+                my_blog.log_user_out()
+            elif to_do == '2':
+                my_blog.create_post()
 
 
 
+# Execute the run_blog function
 run_blog()
