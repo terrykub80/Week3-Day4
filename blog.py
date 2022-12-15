@@ -59,6 +59,19 @@ class Blog:
         else:
             print("You must be logged in to perform this action.")
 
+    # Method to view ALL posts
+    def view_posts(self):
+        # Check to see if there any posts
+        if self.posts:
+            # Loop through all of the posts
+            for post in self.posts:
+                # Display the post
+                print(post)
+        # If no posts
+        else:
+            print("There are currently no posts for this blog :(")
+
+
 
 
 
@@ -124,7 +137,7 @@ def run_blog():
             # Ask which option they want to do
             to_do = input("Which option would you like to do? ")
             # Keep asking if user chooses invalid option
-            if to_do not in {'1', '2', '5'}:
+            if to_do not in {'1', '2', '3', '5'}:
                 to_do = input("Invalid option. Please choose 1, 2, 3, 4, or 5: ")
             if to_do == '5':
                 print("Thanks for stopping by!")
@@ -135,17 +148,23 @@ def run_blog():
             elif to_do == '2':
                 # method to log user in
                 my_blog.log_user_in()
+            elif to_do == '3':
+                #method to vew ALL posts
+                my_blog.view_posts()
         # if the current user is not "none" (aka a user is not logged in)
         else:
             # Print options for logged in user
-            print("1. Log Out\n2. Create New Post")
+            print("1. Log Out\n2. Create New Post\n3. View All Posts")
             to_do = input("Which option would you like to choose? ")
-            while to_do not in {'1', '2'}:
-                to_do = input("Invalid option. Please choose 1 or 2. ")
+            while to_do not in {'1', '2', '3'}:
+                to_do = input("Invalid option. Please choose 1, 2 or 3. ")
             if to_do == '1':
                 my_blog.log_user_out()
             elif to_do == '2':
                 my_blog.create_post()
+            elif to_do == '3':
+                #method to vew ALL posts
+                my_blog.view_posts()
 
 
 
